@@ -1,6 +1,5 @@
 import ContactList from '../ContactList/ContactList'
 import css from './App.module.css'
-import ContactForm from '../ContactForm/ContactForm'
 import SearchBox from '../SearchBox/SearchBox'
 
 import { useState } from 'react'
@@ -14,13 +13,15 @@ const initialContacs = [
 
 export default function App() {
     const [contacts, setContacts] = useState(initialContacs)  
+    const [filter, setFilter] = useState("")
+    
+    const visibleContacts = contacts.filter((contact) => contact.name.toLowerCase().includes(filter.toLowerCase()))
 
     return (
         <div>
             <h1 className={css.title}>Phonebook</h1>
-            <ContactForm />
-            <SearchBox />
-            <ContactList contacts={contacts} />
+            <SearchBox value={filter} onFilter={setFilter} />
+            <ContactList contacts={visibleContacts} />
         </div>
     )
 }
