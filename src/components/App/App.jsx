@@ -15,13 +15,19 @@ const initialContacs = [
 export default function App() {
     const [contacts, setContacts] = useState(initialContacs)  
     const [filter, setFilter] = useState("")
-    
+
+
+    const addContact = (newContact) => {
+        setContacts((prevContacts) => {
+            return [...prevContacts, newContact]
+        })
+    }
     const visibleContacts = contacts.filter((contact) => contact.name.toLowerCase().includes(filter.toLowerCase()))
 
     return (
         <div>
             <h1 className={css.title}>Phonebook</h1>
-            <ContactForm/>
+            <ContactForm onAdd={addContact} />
             <SearchBox value={filter} onFilter={setFilter} />
             <ContactList contacts={visibleContacts} />
         </div>
